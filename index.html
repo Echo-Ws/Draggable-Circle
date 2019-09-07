@@ -78,7 +78,7 @@
         }
 
 
-        document.addEventListener('mousedown', (e) => {
+        document.addEventListener('pointerdown', (e) => {
             // d = e.target
             target = e.target
             
@@ -100,9 +100,9 @@
             // console.log('target top '+target.offsetTop)
         });
 
-        document.addEventListener('mousemove', move);
+        document.addEventListener('pointermove', move);
         
-        document.addEventListener('mouseup', (e) => { 
+        document.addEventListener('pointerup', (e) => { 
             ele.setAttribute('val', parseInt(ele.getAttribute('val'))+1)
             ele.children[0].innerText = ele.getAttribute('val')
             target = '' 
