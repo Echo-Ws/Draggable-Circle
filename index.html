@@ -88,25 +88,35 @@
                 
                 
             }
+            else{
+                target = false;
+            }
             
-            // console.log('eclintx '+ e.clientX)
+            console.log(target)
             // console.log('eclinty '+ e.clientY)
             // console.log('target left '+target.offsetLeft)
             // console.log('target top '+target.offsetTop)
 
         }
         function up(e){
-            target.setAttribute('val', parseInt(target.getAttribute('val'))+1)
-            target.children[0].innerText = target.getAttribute('val')
-            target = '' 
-            diffX = 0;
-            diffY = 0;
+            if(target){
+                target.setAttribute('val', parseInt(target.getAttribute('val'))+1)
+                target.children[0].innerText = target.getAttribute('val')
+                target = '' 
+                diffX = 0;
+                diffY = 0;
+
+            }
+            
            
         }
         document.addEventListener('pointerdown', down);
         document.addEventListener('pointermove', move);
         document.addEventListener('pointerup', up);
-
+        
+        document.addEventListener('mousedown', down);
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', up);
         
         
 
