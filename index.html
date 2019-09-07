@@ -25,6 +25,7 @@
             height: var(--r);
             cursor: grab;
             position: absolute;
+            touch-action: none;
         }
 
         #c1 {
@@ -60,26 +61,22 @@
     <p>&nbsp;</p>
 
     <script>
-        let target
+        var target
         let diffX = 0;
         let diffY = 0;
-        let ele
-        // var d
 
         function move(e) {
             
-            if (ele) {        
-                ele.style.left = (e.clientX - diffX)<0?0:(e.clientX - diffX) + 'px';
-                ele.style.top = (e.clientY - diffY)<0?0:(e.clientY - diffY) + 'px';
-                
+            if (target) {        
+                target.style.left = (e.clientX - diffX)<0?0:(e.clientX - diffX) + 'px';
+                target.style.top = (e.clientY - diffY)<0?0:(e.clientY - diffY) + 'px';
+                // console.log([target.style.left,target.style.top])
             }
 
 
         }
 
-
-        document.addEventListener('pointerdown', (e) => {
-            // d = e.target
+        function down(e) {
             target = e.target
             
             if (['circle','times'].indexOf(target.className) != -1){
@@ -88,29 +85,29 @@
                 }
                 diffX=e.clientX-target.offsetLeft;
                 diffY=e.clientY-target.offsetTop;
-                ele = document.getElementById(target.id);
-                console.log(e)
+                
+                
             }
-           
-            
             
             // console.log('eclintx '+ e.clientX)
             // console.log('eclinty '+ e.clientY)
             // console.log('target left '+target.offsetLeft)
             // console.log('target top '+target.offsetTop)
-        });
 
-        document.addEventListener('pointermove', move);
-        
-        document.addEventListener('pointerup', (e) => { 
-            ele.setAttribute('val', parseInt(ele.getAttribute('val'))+1)
-            ele.children[0].innerText = ele.getAttribute('val')
+        }
+        function up(e){
+            target.setAttribute('val', parseInt(target.getAttribute('val'))+1)
+            target.children[0].innerText = target.getAttribute('val')
             target = '' 
             diffX = 0;
             diffY = 0;
-            ele = ''
-        });
+           
+        }
+        document.addEventListener('pointerdown', down);
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', up);
 
+        
         
 
     </script>
