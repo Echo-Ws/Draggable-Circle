@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Draggable Circle</title>
+    <style>
+        body {
+            text-align: center;
+            --r: 50px;
+        }
+        .times,p {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-top: 15px;
+        }
+        .circle {
+            border-radius: 50%;
+            display: inline-block;
+            width: var(--r);
+            height: var(--r);
+            cursor: grab;
+            position: absolute;
+        }
+
+        #c1 {
+            background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, orange);
+            top: 10%
+        }
+
+        #c2 {
+            background-image: -webkit-radial-gradient(45px 45px, circle cover, green, rgb(139, 221, 31));
+            top: 30%
+        }
+
+        #c3 {
+            background-image: -webkit-radial-gradient(45px 45px, circle cover, red, rgb(216, 213, 208));
+            top: 50%
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Draggable Circle</h1>
+    <div id="c1" class="circle" val=0>
+        <div class='times'>0</div>
+    </div>
+    <p>&nbsp;</p>
+    <div id="c2" class="circle" val=0>
+        <div class='times'>0</div>
+    </div>
+    <p>&nbsp;</p>
+    <div id="c3" class="circle" val=0>
+        <div class='times'>0</div>
+    </div>
+    <p>&nbsp;</p>
+
+    <script>
+        let target
+        let diffX = 0;
+        let diffY = 0;
+        let ele
+        // var d
+
+        function move(e) {
+            
+            if (ele) {        
+                ele.style.left = (e.clientX - diffX)<0?0:(e.clientX - diffX) + 'px';
+                ele.style.top = (e.clientY - diffY)<0?0:(e.clientY - diffY) + 'px';
+                
+            }
+
+
+        }
+
+
+        document.addEventListener('mousedown', (e) => {
+            // d = e.target
+            target = e.target
+            
+            if (['circle','times'].indexOf(target.className) != -1){
+                if (target.className == 'times'){
+                    target = target.parentNode;
+                }
+                diffX=e.clientX-target.offsetLeft;
+                diffY=e.clientY-target.offsetTop;
+                ele = document.getElementById(target.id);
+                console.log(e)
+            }
+           
+            
+            
+            // console.log('eclintx '+ e.clientX)
+            // console.log('eclinty '+ e.clientY)
+            // console.log('target left '+target.offsetLeft)
+            // console.log('target top '+target.offsetTop)
+        });
+
+        document.addEventListener('mousemove', move);
+        
+        document.addEventListener('mouseup', (e) => { 
+            ele.setAttribute('val', parseInt(ele.getAttribute('val'))+1)
+            ele.children[0].innerText = ele.getAttribute('val')
+            target = '' 
+            diffX = 0;
+            diffY = 0;
+            ele = ''
+        });
+
+        
+
+    </script>
+
+
+
+</body>
+
+</html>
